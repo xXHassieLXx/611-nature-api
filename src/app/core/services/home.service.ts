@@ -25,6 +25,6 @@ export class HomeService {
 
   getAllTrails(): Observable<Trail[]> {
   console.log('Fetching all trails from API...');
-  return this.httpClient.get<Trail[]>(`${environment.API_URL}/Place/allTrails`);
+  return this.httpClient.get<Trail[]>(`${environment.API_URL}/place/allTrails`);
 }
 }
