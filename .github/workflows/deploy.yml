@@ -1,0 +1,51 @@
+name: Docker Build & Publish
+ 
+on:
+  push:
+    branches:
+      - master
+ 
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+ 
+      - name: Create .env file
+        run: |
+            echo "API_URL=${{ secrets.API_URL }}" >> .env
+            echo "MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}" >> .env
+            echo ".env file created with API_URL and MAPBOX_TOKEN"
+ 
+      - name: Login to Docker Hub
+        run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+ 
+      - name: Build Docker Image
+        # Build with the final repo name to avoid tag mismatch later
+        run: |
+          docker build -t hassielam/611-nature-api:${{ github.sha }} .
+
+      - name: Tag Latest
+        run: docker tag hassielam/611-nature-api:${{ github.sha }} hassielam/611-nature-api:latest
+
+      - name: Push Docker Image
+        run: |
+          docker push hassielam/611-nature-api:${{ github.sha }}
+          docker push hassielam/611-nature-api:latest
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps: 
+        - name: Deploy to AWS
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.SSH_KEY }}
+            script: |
+              docker pull hassielam/611-nature-api:latest
+              cd containers
+              docker compose up -d 
+
+      
