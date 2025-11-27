@@ -1,105 +1,162 @@
-<nz-table [nzData]="places">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Categoría</th>
-      <th>Lati/Long</th>
-      <th>Altitud (m)</th>
-      <th>Accesible</th>
-      <th>Entrada ($)</th>
-      <th>Horario</th>
-      <th>Creado</th>
-      <th>Photos</th>
-      <th>Amenities</th>
-      <th>Trails</th>
-      <th>Mini Map</th>
+<button nz-button nzType="primary" (click)="analyzePlaces()">
+  Analisar places co iA
+</button>
 
-    </tr>
-  </thead>
-
-  <tbody>
-    <ng-container *ngFor="let place of places">
-      <!-- Main row -->
+<nz-spin [nzSpinning]="loading" nzTip="Analizando places con IA...">  
+  <nz-table [nzData]="places">
+    <thead>
       <tr>
-        <td>{{ place.id }}</td>
-        <td>
-          <strong>{{ place.name }}</strong>
-          <br />
-          <small class="text-muted">{{ place.description }}</small>
-        </td>
-        <td>
-          <nz-tag nzColor="blue" [nzBordered]="false">
-            {{ place.category | titlecase }}
-          </nz-tag>
-        </td>
-        <td>{{ place.latitude }}, {{ place.longitude }}</td>
-        <td>{{ place.elevationMeters }}</td>
-        <td>
-          <nz-tag [nzColor]="place.accessible ? 'green' : 'red'" [nzBordered]="false">
-            {{ place.accessible ? 'Sí' : 'No' }}
-          </nz-tag>
-        </td>
-        <td>
-          <nz-tag nzColor="gold" [nzBordered]="false">
-            {{ place.entryFee | currency:'USD':'symbol':'1.0-0' }}
-          </nz-tag>
-        </td>
-        <td>{{ place.openingHours }}</td>
-        <td>{{ place.createdAt | date: 'dd/MM/yyyy' }}</td>
-        <td>
-          <button nz-button nzType="primary" nzSize="small" (click)="toggleGallery(place.id)">
-            <span nz-icon nzType="eye"></span>
-            Ver Mas
-          </button>
-        </td>
-        <td>
-          <ng-container *ngFor="let a of place.amenities || []">
-            <nz-tag nzColor="cyan" [nzBordered]="false" style="margin:2px;">
-              {{ a.name }}
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Lati/Long</th>
+        <th>Altitud (m)</th>
+        <th>Accesible</th>
+        <th>Entrada ($)</th>
+        <th>Horario</th>
+        <th>Creado</th>
+        <th>Photos</th>
+        <th>Amenities</th>
+        <th>Trails</th>
+        <th>Mini Map</th>
+  
+      </tr>
+    </thead>
+  
+    <tbody>
+      <ng-container *ngFor="let place of places">
+        <!-- Main row -->
+        <tr>
+          <td>{{ place.id }}</td>
+          <td>
+            <strong>{{ place.name }}</strong>
+            <br />
+            <small class="text-muted">{{ place.description }}</small>
+          </td>
+          <td>
+            <nz-tag nzColor="blue" [nzBordered]="false">
+              {{ place.category | titlecase }}
             </nz-tag>
-          </ng-container>
-        </td>
-
-        <td>
-          <div class="trails-cards-container" style="display:flex; flex-wrap:wrap; gap:10px;">
-            <ng-container *ngFor="let t of place.trails || []">
-              <nz-card style="width: 200px; margin-bottom: 10px;">
-                <nz-card-meta
-                  [nzTitle]="t.name"
-                  [nzDescription]="t.difficulty + ' | ' + t.distanceKm + ' km | ' + t.estimatedTimeMinutes + ' min'">
-                </nz-card-meta>
-                <div style="margin-top: 5px;">
-                  <nz-tag [nzColor]="t.isLoop ? 'green' : 'red'" [nzBordered]="false">
-                    {{ t.isLoop ? 'Loop' : 'Out & Back' }}
-                  </nz-tag>
-                </div>
-              </nz-card>
+          </td>
+          <td>{{ place.latitude }}, {{ place.longitude }}</td>
+          <td>{{ place.elevationMeters }}</td>
+          <td>
+            <nz-tag [nzColor]="place.accessible ? 'green' : 'red'" [nzBordered]="false">
+              {{ place.accessible ? 'Sí' : 'No' }}
+            </nz-tag>
+          </td>
+          <td>
+            <nz-tag nzColor="gold" [nzBordered]="false">
+              {{ place.entryFee | currency:'USD':'symbol':'1.0-0' }}
+            </nz-tag>
+          </td>
+          <td>{{ place.openingHours }}</td>
+          <td>{{ place.createdAt | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <button nz-button nzType="primary" nzSize="small" (click)="toggleGallery(place.id)">
+              <span nz-icon nzType="eye"></span>
+              Ver Mas
+            </button>
+          </td>
+          <td>
+            <ng-container *ngFor="let a of place.amenities || []">
+              <nz-tag nzColor="cyan" [nzBordered]="false" style="margin:2px;">
+                {{ a.name }}
+              </nz-tag>
             </ng-container>
-          </div>
-        </td>
+          </td>
+  
+          <td>
+            <div class="trails-cards-container" style="display:flex; flex-wrap:wrap; gap:10px;">
+              <ng-container *ngFor="let t of place.trails || []">
+                <nz-card style="width: 200px; margin-bottom: 10px;">
+                  <nz-card-meta
+                    [nzTitle]="t.name"
+                    [nzDescription]="t.difficulty + ' | ' + t.distanceKm + ' km | ' + t.estimatedTimeMinutes + ' min'">
+                  </nz-card-meta>
+                  <div style="margin-top: 5px;">
+                    <nz-tag [nzColor]="t.isLoop ? 'green' : 'red'" [nzBordered]="false">
+                      {{ t.isLoop ? 'Loop' : 'Out & Back' }}
+                    </nz-tag>
+                  </div>
+                </nz-card>
+              </ng-container>
+            </div>
+          </td>
+  
+          <td>
+            <div 
+              [id]="'mini-map-' + place.id" 
+              class="mini-map-container" 
+              style="width: 200px; height: 150px;">
+            </div>
+          </td>
+  
+  
+        </tr>
+  
+        <!-- Gallery row -->
+        <tr *ngIf="showGalleryMap[place.id]">
+          <td colspan="12">
+            <div class="photo-gallery">
+              <img *ngFor="let photo of place.photos" [src]="photo.url" [alt]="place.name" class="photo-thumb" />
+            </div>
+          </td>
+        </tr>
+  
+        
+  </ng-container>
+  </tbody>
+  </nz-table>
+</nz-spin>
 
-        <td>
-          <div 
-            [id]="'mini-map-' + place.id" 
-            class="mini-map-container" 
-            style="width: 200px; height: 150px;">
-          </div>
-        </td>
+<nz-modal 
+  [(nzVisible)]="modalVisible" 
+  nzTitle="AI Analysis Result" 
+  nzWidth="720px"
+  nzCentered="true"
+  nzClosable="true"
+  (nzOnCancel)="modalVisible = false">
 
+  <ng-container *nzModalContent>
 
-      </tr>
+    <!-- Top Place -->
+    <h2>Más popular</h2>
+    <p><strong>Nombre:</strong> {{ analyze?.topPlace?.name }}</p>
+    <p><strong>Razón:</strong> {{ analyze?.topPlace?.reason }}</p>
 
-      <!-- Gallery row -->
-      <tr *ngIf="showGalleryMap[place.id]">
-        <td colspan="12">
-          <div class="photo-gallery">
-            <img *ngFor="let photo of place.photos" [src]="photo.url" [alt]="place.name" class="photo-thumb" />
-          </div>
-        </td>
-      </tr>
+    <hr />
 
-      
-</ng-container>
-</tbody>
-</nz-table>
+    <!-- Top Trail -->
+    <h2>Mejor sendero</h2>
+    <p><strong>Nombre:</strong> {{ analyze?.topTrail?.name }}</p>
+    <p><strong>Dificultad:</strong> {{ analyze?.topTrail?.difficulty }}</p>
+    <p><strong>Distancia:</strong> {{ analyze?.topTrail?.distanceKm }} km</p>
+
+    <hr />
+
+    <!-- Accessibility -->
+    <h2>Accesibilidad</h2>
+    <p><strong>Total accesibles:</strong> {{ analyze?.accessibilityReport?.totalAccessible }}</p>
+    <p><strong>Porcentaje accesible:</strong> {{ analyze?.accessibilityReport?.percentageAccessible }}%</p>
+
+    <hr />
+
+    <!-- Category Summary -->
+    <h2>Categorías</h2>
+    <div *ngFor="let cat of analyze?.categorySummary">
+      <p>• {{ cat.category }}: {{ cat.count }}</p>
+    </div>
+
+    <hr />
+
+    <!-- Patterns / Insights -->
+    <h2>Patrones encontrados</h2>
+    <ul>
+      <li *ngFor="let p of analyze?.patterns">
+        {{ p }}
+      </li>
+    </ul>
+
+  </ng-container>
+</nz-modal>
