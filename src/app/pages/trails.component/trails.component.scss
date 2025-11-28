@@ -1,0 +1,66 @@
+/* Container table styling */
+nz-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Table header */
+nz-table thead th {
+  background: #fde0e0;
+  color: #b71c1c;
+  font-weight: 700;
+  padding: 12px;
+  border-bottom: 2px solid #ffb3b3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Table rows */
+nz-table tbody td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* Hover effect for rows */
+nz-table tbody tr:hover {
+  background: #fff6f6;
+  transition: 0.15s ease;
+}
+
+/* Difficulty tags (will already get color from your function) */
+nz-tag {
+  font-weight: 600;
+  border-radius: 6px !important;
+}
+
+/* Accessible tag */
+[nzColor="green"] {
+  background: #c8f7c5 !important;
+  color: #0f7b0f !important;
+}
+
+[nzColor="red"] {
+  background: #ffd1d1 !important;
+  color: #b30000 !important;
+}
+
+/* Loop tags */
+[nzColor="blue"] {
+  background: #d6eaff !important;
+  color: #0056b3 !important;
+}
+
+[nzColor="orange"] {
+  background: #ffe5cc !important;
+  color: #b35a00 !important;
+}
+
+/* Number alignment */
+td:nth-child(3),
+td:nth-child(5) {
+  text-align: center;
+}

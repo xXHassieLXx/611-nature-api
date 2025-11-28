@@ -1,19 +1,104 @@
+/* Title styling */
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #d32f2f; /* red vibes */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Button spacing */
+button[nz-button] {
+  margin-bottom: 20px;
+}
+
+/* Table styling */
+nz-table table {
+  border-collapse: collapse;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+nz-table thead th {
+  background: #fce4e4; /* soft red-pink */
+  color: #b71c1c;
+  font-weight: 600;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #f8bbbb;
+}
+
+nz-table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+/* Hover row effect */
+nz-table tbody tr:hover {
+  background: #fff6f6;
+  cursor: pointer;
+}
+
+/* Muted description under place name */
+.text-muted {
+  color: #777 !important;
+  font-size: 12px;
+}
+
+/* Photo gallery */
 .photo-gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;          // space between images
-  margin-top: 10px;
+  gap: 10px;
+  padding: 15px;
 }
 
 .photo-thumb {
-  width: 150px;       // fixed width
-  height: 100px;      // fixed height
-  object-fit: cover;  // keeps image proportional and crops if needed
-  border-radius: 5px; // optional: rounded corners
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); // optional: small shadow
-  transition: transform 0.2s;
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
 }
 
 .photo-thumb:hover {
-  transform: scale(1.05); // nice hover effect
+  transform: scale(1.05);
+}
+
+/* Mini map container */
+.mini-map-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Trails card container */
+.trails-cards-container nz-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform .15s ease;
+}
+
+.trails-cards-container nz-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Modal styling tweaks */
+nz-modal h2 {
+  color: #c62828;
+  font-weight: 700;
+}
+
+nz-modal p {
+  margin: 4px 0;
+}
+
+nz-modal hr {
+  margin: 18px 0;
+  border: none;
+  border-top: 1px solid #f0f0f0;
 }
